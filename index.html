@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' https://res.cloudinary.com; img-src 'self' data: blob: https://res.cloudinary.com; manifest-src 'self' blob:; object-src 'none'; font-src 'self' data: https://fonts.gstatic.com;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data: blob: https://res.cloudinary.com; manifest-src 'self' blob:; object-src 'none'; font-src 'self' data: https://fonts.gstatic.com;">
 <title>Hai Duong Maritime Co., Ltd</title>
 <meta name="description" content="Intra-Asia dry bulk carrier specialists. Operating a fleet of self-gear Tween-Decker bulkers across Asia Pacific trade lanes since 2014.">
 <meta name="theme-color" content="#0f1c34">
@@ -14,15 +14,6 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="HD Maritime">
-<link rel="apple-touch-icon" href="https://res.cloudinary.com/djefvudoi/image/upload/v1781229533/Logo-hd_iwyctp.png">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hai Duong Maritime Co., Ltd">
-<meta property="og:description" content="Intra-Asia dry bulk carrier specialists. Self-gear Tween-Decker bulkers operating across Asia Pacific trade lanes since 2014.">
-<meta property="og:image" content="https://res.cloudinary.com/djefvudoi/image/upload/v1781229533/Logo-hd_iwyctp.png">
-<meta property="og:url" content="https://hdmaritime.com.vn">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hai Duong Maritime Co., Ltd">
-<meta name="twitter:description" content="Intra-Asia dry bulk carrier specialists operating across Asia Pacific since 2014.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -689,6 +680,7 @@ footer {
   display: grid;
   grid-template-columns: 1fr;
   gap: 10px;
+  height: 100%;
 }
 .about-img-item {
   position: relative;
@@ -711,10 +703,12 @@ footer {
   letter-spacing: 0.5px;
   font-family: var(--font-body);
 }
-/* About image wrapper */
+/* Remove old single img wrap styles for about */
 .about-img-wrap {
   position: relative;
   border-radius: 4px;
+  overflow: visible;
+  aspect-ratio: unset;
 }
 </style>
 </head>
@@ -959,7 +953,7 @@ footer {
         <div class="contact-row">
           <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 1.2 2 2 0 012.16 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           <div>
-            <div class="contact-label">Mr. Le Minh Hai</div>
+            <div class="contact-label">Mr. Le Minh Hai - Manager</div>
             <div class="contact-value"><a href="tel:+84902091096">+84 902 091 096</a></div>
             <div class="contact-value-sm">WhatsApp / Zalo available</div>
           </div>
@@ -967,7 +961,7 @@ footer {
         <div class="contact-row">
           <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 1.2 2 2 0 012.16 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           <div>
-            <div class="contact-label">Mr. Dang Nhu Minh</div>
+            <div class="contact-label">Mr. Dang Nhu Minh - Executive</div>
             <div class="contact-value"><a href="tel:+84983588375">+84 983 588 375</a></div>
             <div class="contact-value-sm">WhatsApp / Zalo available</div>
           </div>
@@ -1055,25 +1049,6 @@ navLinks.querySelectorAll('a').forEach(function(a) {
   });
 });
 
-
-// === LOGO TEXT SCALE ===
-function fitLogoSubtext() {
-  var main = document.querySelector('.logo-text-main');
-  var sub  = document.querySelector('.logo-text-sub');
-  if (!main || !sub) return;
-  sub.style.transform = 'scaleX(1)';
-  var mainW = main.getBoundingClientRect().width;
-  var subW  = sub.getBoundingClientRect().width;
-  if (subW === 0) return;
-  sub.style.transform = 'scaleX(' + (mainW / subW) + ')';
-}
-if (document.fonts && document.fonts.ready) {
-  document.fonts.ready.then(function() { fitLogoSubtext(); });
-} else {
-  window.addEventListener('load', fitLogoSubtext);
-}
-window.addEventListener('resize', fitLogoSubtext);
-
 // === SCROLL REVEAL ===
 (function() {
   if (!('IntersectionObserver' in window)) {
@@ -1105,7 +1080,58 @@ window.addEventListener('scroll', function() {
   }
 }, { passive: true });
 
-// === PWA: APPLE TOUCH ICON ===
+// === PWA: APPLE TOUCH ICON (canvas-generated) ===
+(function() {
+  try {
+    var c = document.createElement('canvas');
+    c.width = 180; c.height = 180;
+    var ctx = c.getContext('2d');
+    ctx.fillStyle = '#0f1c34';
+    ctx.fillRect(0, 0, 180, 180);
+    // H
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(20, 20, 28, 110);
+    ctx.fillRect(20, 60, 68, 20);
+    ctx.fillRect(60, 20, 28, 110);
+    // D
+    ctx.fillRect(102, 20, 28, 110);
+    ctx.beginPath();
+    ctx.moveTo(130, 20);
+    ctx.quadraticCurveTo(170, 20, 170, 75);
+    ctx.quadraticCurveTo(170, 130, 130, 130);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = '#0f1c34';
+    ctx.beginPath();
+    ctx.moveTo(130, 36);
+    ctx.quadraticCurveTo(155, 36, 155, 75);
+    ctx.quadraticCurveTo(155, 114, 130, 114);
+    ctx.closePath();
+    ctx.fill();
+    // Wave
+    ctx.strokeStyle = '#F97316';
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(20, 148);
+    ctx.bezierCurveTo(40, 148, 50, 136, 62, 136);
+    ctx.bezierCurveTo(74, 136, 84, 148, 100, 148);
+    ctx.bezierCurveTo(116, 148, 126, 140, 160, 140);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(249,115,22,0.4)';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(20, 158);
+    ctx.bezierCurveTo(40, 158, 50, 146, 62, 146);
+    ctx.bezierCurveTo(74, 146, 84, 158, 100, 158);
+    ctx.bezierCurveTo(116, 158, 126, 150, 160, 150);
+    ctx.stroke();
+    var link = document.createElement('link');
+    link.rel = 'apple-touch-icon';
+    link.href = c.toDataURL('image/png');
+    document.head.appendChild(link);
+  } catch(e) {}
+})();
 
 // === PWA: MANIFEST ===
 (function() {
@@ -1143,8 +1169,6 @@ window.addEventListener('scroll', function() {
     '}));self.clients.claim();});' +
     'self.addEventListener("fetch",function(e){' +
     'if(e.request.method!=="GET")return;' +
-    'var u=e.request.url;if(u.indexOf("cloudinary.com")>-1||u.indexOf("fonts.g")>-1||u.indexOf("fonts.googleapis")>-1)return;' +
-    'if(e.request.url.indexOf("res.cloudinary.com")>-1||e.request.url.indexOf("fonts.g")>-1)return;' +
     'e.respondWith(caches.open(C).then(function(cache){' +
     'return cache.match(e.request).then(function(r){return r||fetch(e.request);});' +
     '}));});';
@@ -1155,6 +1179,10 @@ window.addEventListener('scroll', function() {
   navigator.serviceWorker.register(swUrl).catch(function() {});
 })();
 
+// === FOOTER VERSION ===
+document.addEventListener('DOMContentLoaded', function() {
+  // version already hardcoded in footer copy, no action needed
+});
 </script>
 </body>
 </html>
