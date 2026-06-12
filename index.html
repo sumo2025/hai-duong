@@ -103,10 +103,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   color: #5b6f96;
   line-height: 1;
   white-space: nowrap;
-  /* stretch the sub-line to match the width of HAI DUONG above */
-  text-align: justify;
-  text-align-last: justify;
-  text-justify: inter-character;
+  /* tuned tracking so the sub-line spans the same width as HAI DUONG
+     above — cross-browser (no justify hack, which iOS Safari mishandles) */
+  letter-spacing: 2.2px;
 }
 /* Nav links */
 .nav-links {
@@ -648,6 +647,14 @@ footer {
   .vessel-card { grid-template-columns: 1fr; gap: 12px; }
   .pillars { grid-template-columns: 1fr; }
   section { padding: 64px 0; }
+
+  /* Hero: anchor content to the top and clear the fixed navbar so the
+     eyebrow line isn't clipped behind it on tall mobile layouts */
+  #hero { align-items: flex-start; }
+  .hero-content {
+    padding-top: calc(var(--nav-h) + 28px);
+    padding-bottom: 56px;
+  }
 }
 
 /* === SCROLL REVEAL === */
@@ -1022,7 +1029,7 @@ footer {
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const APP_VERSION = 'V1.0.9';
+const APP_VERSION = 'V1.1.0';
 
 // === NAVBAR TOGGLE (mobile) ===
 const navToggle = document.getElementById('navToggle');
