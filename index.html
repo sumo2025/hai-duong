@@ -86,22 +86,27 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* Logo mark */
 .logo-wrap { display: flex; align-items: center; gap: 14px; }
 .logo-svg { height: 60px; width: auto; flex-shrink: 0; }
-.logo-text { display: flex; flex-direction: column; gap: 1px; }
+.logo-text { display: flex; flex-direction: column; gap: 3px; align-items: stretch; }
 .logo-text-main {
   font-family: var(--font-head);
-  font-size: 17px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--navy);
-  letter-spacing: 3px;
-  line-height: 1;
+  letter-spacing: 2px;
+  line-height: 0.92;
+  white-space: nowrap;
 }
 .logo-text-sub {
   font-family: var(--font-body);
-  font-size: 10px;
-  font-weight: 400;
-  color: #6b7fa8;
-  letter-spacing: 2.5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #5b6f96;
   line-height: 1;
+  white-space: nowrap;
+  /* stretch the sub-line to match the width of HAI DUONG above */
+  text-align: justify;
+  text-align-last: justify;
+  text-justify: inter-character;
 }
 /* Nav links */
 .nav-links {
@@ -561,11 +566,36 @@ footer {
 }
 .footer-logo { display: none; }
 .footer-copy {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0 10px;
+  flex-wrap: wrap;
+  justify-content: center;
   font-size: 12px;
   color: #4a5a7a;
   line-height: 1.6;
 }
 .footer-copy a { color: var(--navy); }
+.footer-name {
+  color: #1A3560;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 1px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.footer-name::after  { content: "\00a0\00b7\00a0"; font-weight: 400; color: #8899bb; }
+.footer-rights::after { content: "\00a0\00b7\00a0"; font-weight: 400; color: #8899bb; }
+
+@media (max-width: 767px) {
+  .footer-copy {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+  .footer-name::after  { content: ""; }
+  .footer-rights::after { content: ""; }
+}
 
 /* === RESPONSIVE: TABLET === */
 @media (min-width: 768px) {
@@ -910,7 +940,7 @@ footer {
           <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-value"><a href="mailto:chartering@hdmaritime.com.vn">chartering@hdmaritime.com.vn</a></div>
+            <div class="contact-value"><a href="/cdn-cgi/l/email-protection#a7c4cfc6d5d3c2d5cec9c0e7cfc3cac6d5ced3cecac289c4c8ca89d1c9"><span class="__cf_email__" data-cfemail="9ffcf7feedebfaedf6f1f8dff7fbf2feedf6ebf6f2fab1fcf0f2b1e9f1">[email&#160;protected]</span></a></div>
           </div>
         </div>
         <div class="contact-row">
@@ -937,7 +967,7 @@ footer {
           <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-value"><a href="mailto:ops@hdmaritime.com.vn">ops@hdmaritime.com.vn</a></div>
+            <div class="contact-value"><a href="/cdn-cgi/l/email-protection#e08f9093a088848d81928994898d85ce838f8dce968e"><span class="__cf_email__" data-cfemail="adc2dddeedc5c9c0ccdfc4d9c4c0c883cec2c083dbc3">[email&#160;protected]</span></a></div>
           </div>
         </div>
         <div class="contact-row">
@@ -982,16 +1012,17 @@ footer {
 <footer>
   <div class="container">
     <div class="footer-inner">
-  <p class="footer-copy">
-        <strong style="color:#1A3560;font-family:'Space Grotesk',sans-serif;letter-spacing:1px;font-size:13px;">HAI DUONG MARITIME CO., LTD</strong><br>
-        &copy; 2025 All rights reserved &nbsp;&middot;&nbsp; IMO No. 5885475 &nbsp;&middot;&nbsp; Hai Phong, Vietnam
-      </p>
+  <div class="footer-copy">
+        <strong class="footer-name">HAI DUONG MARITIME CO., LTD</strong>
+        <span class="footer-rights">&copy; 2025 All rights reserved &nbsp;&middot;&nbsp; IMO No. 5885475</span>
+        <span class="footer-addr">Hai Phong, Vietnam</span>
+      </div>
     </div>
   </div>
 </footer>
 
-<script>
-const APP_VERSION = 'V1.0.8';
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const APP_VERSION = 'V1.0.9';
 
 // === NAVBAR TOGGLE (mobile) ===
 const navToggle = document.getElementById('navToggle');
