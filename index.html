@@ -588,6 +588,14 @@ section { padding: 96px 0; }
   font-weight: 500;
 }
 .contact-value a:hover { color: var(--orange); }
+.email-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  border-bottom: 1px dashed transparent;
+}
+.email-link:hover,
+.email-link:focus-visible { border-bottom-color: currentColor; }
 .contact-value-sm {
   font-size: 13px;
   color: var(--text-muted);
@@ -990,7 +998,7 @@ footer {
           <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-value">chartering[at]hdmaritime.com.vn</div>
+            <div class="contact-value"><a class="email-link" data-u="Y2hhcnRlcmluZw==" data-d="aGRtYXJpdGltZS5jb20udm4=" aria-label="Gửi email cho bộ phận Chartering">Đang tải…</a></div>
           </div>
         </div>
         <div class="contact-row">
@@ -1017,7 +1025,7 @@ footer {
           <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-value">ops[at]hdmaritime.com.vn</div>
+            <div class="contact-value"><a class="email-link" data-u="b3Bz" data-d="aGRtYXJpdGltZS5jb20udm4=" aria-label="Gửi email cho bộ phận Operations">Đang tải…</a></div>
           </div>
         </div>
         <div class="contact-row">
@@ -1070,7 +1078,7 @@ footer {
           <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-value">ops[at]hdmaritime.com.vn</div>
+            <div class="contact-value"><a class="email-link" data-u="b3Bz" data-d="aGRtYXJpdGltZS5jb20udm4=" aria-label="Gửi email cho bộ phận Nhân sự">Đang tải…</a></div>
           </div>
         </div>
       </div>
@@ -1089,7 +1097,7 @@ footer {
           <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-value">ops[at]hdmaritime.com.vn</div>
+            <div class="contact-value"><a class="email-link" data-u="b3Bz" data-d="aGRtYXJpdGltZS5jb20udm4=" aria-label="Gửi email cho bộ phận Kỹ thuật">Đang tải…</a></div>
           </div>
         </div>
       </div>
@@ -1108,7 +1116,7 @@ footer {
           <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <div>
             <div class="contact-label">Email</div>
-            <div class="contact-value">ops[at]hdmaritime.com.vn</div>
+            <div class="contact-value"><a class="email-link" data-u="b3Bz" data-d="aGRtYXJpdGltZS5jb20udm4=" aria-label="Gửi email cho bộ phận Vật tư và Mua sắm">Đang tải…</a></div>
           </div>
         </div>
       </div>
@@ -1130,7 +1138,7 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.1.5';
+const APP_VERSION = 'V1.1.6';
 
 // === NAVBAR TOGGLE (mobile) ===
 const navToggle = document.getElementById('navToggle');
@@ -1284,11 +1292,26 @@ function showUpdateToast() {
   }
 }
 
-// === FOOTER VERSION & YEAR ===
+// === FOOTER VERSION & YEAR + EMAIL DECODE (chống bot scrape) ===
 document.addEventListener('DOMContentLoaded', function() {
   var yr = new Date().getFullYear();
   var el = document.getElementById('footer-rights');
   if (el) el.innerHTML = '&copy; ' + yr + ' All rights reserved &nbsp;&middot;&nbsp; IMO No. 5885475';
+
+  // Email chỉ tồn tại dưới dạng base64 trong HTML source (data-u/data-d).
+  // JS build lại địa chỉ thật lúc runtime -> bot đọc HTML tĩnh không thấy email,
+  // người dùng thật (JS chạy) vẫn thấy và click gửi mail bình thường.
+  document.querySelectorAll('.email-link').forEach(function(link) {
+    try {
+      var user = atob(link.getAttribute('data-u'));
+      var domain = atob(link.getAttribute('data-d'));
+      var address = user + '@' + domain;
+      link.textContent = address;
+      link.setAttribute('href', 'mailto:' + address);
+    } catch (e) {
+      link.textContent = 'Liên hệ qua điện thoại bên dưới';
+    }
+  });
 });
 </script>
 </body>
