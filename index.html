@@ -1020,14 +1020,6 @@ footer {
             <div class="contact-value-sm">WhatsApp / Zalo available</div>
           </div>
         </div>
-        <div class="contact-row">
-          <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 1.2 2 2 0 012.16 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          <div>
-            <div class="contact-label">Mr. Dang Nhu Minh</div>
-            <div class="contact-value"><a href="tel:+84983588375">+84 983 588 375</a></div>
-            <div class="contact-value-sm">WhatsApp / Zalo available</div>
-          </div>
-        </div>
       </div>
       <!-- Operations -->
       <div class="contact-card">
@@ -1149,7 +1141,7 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.2.2';
+const APP_VERSION = 'V1.2.3';
 
 // === NAVBAR TOGGLE (mobile) ===
 const navToggle = document.getElementById('navToggle');
@@ -1238,6 +1230,9 @@ window.addEventListener('scroll', function() {
 })();
 
 // === SERVICE WORKER ===
+// Website công ty (không phải app) -> cập nhật âm thầm, không hiện toast/reload prompt.
+// Trang HTML: network-first (luôn ưu tiên bản mới nhất từ server, fallback cache khi offline).
+// Tài nguyên khác: cache-first (tải nhanh, ít tốn băng thông).
 (function() {
   if (!('serviceWorker' in navigator)) return;
   var SW_VERSION = APP_VERSION;
@@ -1249,6 +1244,10 @@ window.addEventListener('scroll', function() {
     '}));self.clients.claim();});' +
     'self.addEventListener("fetch",function(e){' +
     'if(e.request.method!=="GET")return;' +
+    'if(e.request.mode==="navigate"){' +
+    'e.respondWith(fetch(e.request).then(function(r){' +
+    'var rc=r.clone();caches.open(C).then(function(cache){cache.put(e.request,rc);});return r;' +
+    '}).catch(function(){return caches.match(e.request);}));return;}' +
     'e.respondWith(caches.open(C).then(function(cache){' +
     'return cache.match(e.request).then(function(r){return r||fetch(e.request);});' +
     '}));});';
@@ -1257,51 +1256,13 @@ window.addEventListener('scroll', function() {
     swUrl = URL.createObjectURL(new Blob([swCode], {type: 'application/javascript'}));
   } catch(e) { return; }
   navigator.serviceWorker.register(swUrl).then(function(reg) {
-    // updatefound: new SW installing
-    reg.addEventListener('updatefound', function() {
-      var newSW = reg.installing;
-      newSW.addEventListener('statechange', function() {
-        if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-          showUpdateToast();
-        }
-      });
-    });
-    // Poll mỗi 60 phút
+    // Poll mỗi 60 phút để SW mới (nếu có) được kích hoạt cho lần load kế tiếp
     setInterval(function() { reg.update(); }, 60 * 60 * 1000);
-    // Poll khi tab active trở lại
     document.addEventListener('visibilitychange', function() {
       if (!document.hidden) reg.update();
     });
   }).catch(function() {});
 })();
-
-// === SW UPDATE TOAST ===
-function showUpdateToast() {
-  if (document.getElementById('sw-update-toast')) return;
-  var toast = document.createElement('div');
-  toast.id = 'sw-update-toast';
-  toast.setAttribute('role', 'alert');
-  toast.style.cssText = [
-    'position:fixed', 'bottom:calc(24px + env(safe-area-inset-bottom))', 'left:50%',
-    'transform:translateX(-50%)', 'background:#1e3a5f', 'color:#e8f0fe',
-    'padding:12px 20px', 'border-radius:10px', 'box-shadow:0 4px 20px rgba(0,0,0,.35)',
-    'display:flex', 'align-items:center', 'gap:14px', 'font-size:14px',
-    'white-space:nowrap', 'z-index:9999', 'animation:swToastIn .3s ease'
-  ].join(';');
-  toast.innerHTML = '<span>🔄 Có bản cập nhật mới</span>'
-    + '<button onclick="location.reload(true)" style="background:#f97316;color:#fff;border:none;'
-    + 'border-radius:6px;padding:6px 14px;cursor:pointer;font-size:13px;font-weight:600">Tải lại</button>'
-    + '<button onclick="this.parentNode.remove()" style="background:transparent;border:none;'
-    + 'color:#8899bb;cursor:pointer;font-size:18px;line-height:1" aria-label="Đóng">×</button>';
-  document.body.appendChild(toast);
-  // Inject keyframe nếu chưa có
-  if (!document.getElementById('sw-toast-style')) {
-    var s = document.createElement('style');
-    s.id = 'sw-toast-style';
-    s.textContent = '@keyframes swToastIn{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
-    document.head.appendChild(s);
-  }
-}
 
 // === FOOTER VERSION & YEAR + EMAIL DECODE (chống bot scrape) ===
 document.addEventListener('DOMContentLoaded', function() {
