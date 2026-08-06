@@ -315,6 +315,16 @@ footer {
 .email-link:hover,
 .email-link:focus-visible { border-bottom-color: currentColor; }
 
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* === SCROLL REVEAL === */
 .reveal {
   opacity: 0;
@@ -333,11 +343,11 @@ footer {
 /* === PAGE HEADER (compact counterpart of the home hero) === */
 #page-header {
   background: var(--navy-deep);
-  padding-top: calc(var(--nav-h) + 64px);
-  padding-bottom: 8px;
+  padding-top: calc(var(--nav-h) + 44px);
+  padding-bottom: 0;
   border-bottom: 1px solid var(--border);
 }
-.page-header-inner { padding-bottom: 44px; }
+.page-header-inner { padding-bottom: 30px; }
 .page-eyebrow {
   font-size: 11px;
   font-weight: 500;
@@ -359,23 +369,23 @@ footer {
 }
 .page-title {
   font-family: var(--font-head);
-  font-size: 2.2rem;
-  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-size: 2rem;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
   font-weight: 700;
   color: var(--white);
   line-height: 1.1;
   letter-spacing: -0.5px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   max-width: 700px;
 }
 .page-title em { font-style: normal; color: var(--orange); }
 .page-sub {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 300;
   color: var(--text-muted);
-  max-width: 560px;
+  max-width: 620px;
   line-height: 1.7;
-  margin-bottom: 26px;
+  margin-bottom: 20px;
 }
 .updated-line {
   display: flex;
@@ -400,7 +410,7 @@ footer {
 }
 
 /* === POSITIONS === */
-#positions { background: var(--navy-deep); padding-top: 64px; }
+#positions { background: var(--navy-deep); padding-top: 30px; }
 .positions-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -425,7 +435,7 @@ footer {
 .pos-card:hover { background: var(--card-hover); border-color: rgba(249,115,22,0.5); }
 .pos-card.is-fixed { border-color: var(--border); }
 .pos-card.is-fixed:hover { border-color: var(--border-mid); }
-.pos-cell-pos { margin-top: 16px; }
+.pos-cell-pos { margin-top: 14px; }
 .pos-name {
   font-family: var(--font-head);
   font-size: 16px;
@@ -454,7 +464,7 @@ footer {
 }
 .pos-port {
   font-family: var(--font-head);
-  font-size: 25px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--orange);
   line-height: 1.15;
@@ -469,13 +479,13 @@ footer {
   font-weight: 500;
   color: var(--text-primary);
 }
-.pos-cell-cargo { margin-top: 18px; }
+.pos-cell-cargo { margin-top: 16px; }
 .pos-field-label {
   font-size: 10px;
   color: var(--text-muted);
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 .pos-field-value {
   font-size: 13px;
@@ -503,6 +513,12 @@ footer {
   line-height: 1.7;
 }
 .pos-status-msg strong { color: var(--text-primary); font-weight: 500; }
+.pos-disclaimer {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
 .pos-stale {
   margin-top: 18px;
   font-size: 12px;
@@ -785,16 +801,18 @@ footer {
   .nav-toggle { display: none; }
   .nav-links { display: flex !important; }
   .pos-card {
-    grid-template-columns: minmax(170px, 1fr) minmax(150px, 1fr) minmax(210px, 1.7fr) auto;
+    grid-template-columns: minmax(150px, 0.85fr) minmax(140px, 0.85fr) minmax(220px, 2fr) auto;
     align-items: center;
-    gap: 0 28px;
-    padding: 22px 26px;
+    gap: 0 30px;
+    padding: 20px 26px;
   }
-  .pos-cell-name  { grid-column: 1; }
-  .pos-cell-pos   { grid-column: 2; margin-top: 0; }
-  .pos-cell-cargo { grid-column: 3; margin-top: 0; }
-  .pos-cell-badge { grid-column: 4; align-self: center; }
-  .pos-note { grid-column: 1 / -1; margin-top: 18px; }
+  /* grid-row is mandatory: without it auto-placement pushes the port cell to a
+     second row because the badge already occupied column 4 of row 1. */
+  .pos-cell-name  { grid-column: 1; grid-row: 1; }
+  .pos-cell-pos   { grid-column: 2; grid-row: 1; margin-top: 0; }
+  .pos-cell-cargo { grid-column: 3; grid-row: 1; margin-top: 0; }
+  .pos-cell-badge { grid-column: 4; grid-row: 1; align-self: center; }
+  .pos-note { grid-column: 1 / -1; grid-row: 2; margin-top: 14px; }
   .meta-strip { grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
   .meta-strip .meta-item { border-radius: 4px; }
   .terms-grid { grid-template-columns: 1fr 1fr; }
@@ -806,9 +824,9 @@ footer {
    === RESPONSIVE: DESKTOP (>= 1200px) ===
    ========================================================================== */
 @media (min-width: 1200px) {
-  .pos-card { grid-template-columns: minmax(200px, 1fr) minmax(180px, 1fr) minmax(260px, 1.8fr) auto; }
+  .pos-card { grid-template-columns: minmax(180px, 0.8fr) minmax(160px, 0.8fr) minmax(280px, 2.2fr) auto; }
   .terms-grid { grid-template-columns: 1fr 1fr 1fr; }
-  .page-title { font-size: 3rem; }
+  .page-title { font-size: 2.6rem; }
 }
 
 /* ==========================================================================
@@ -837,9 +855,9 @@ footer {
   }
   .nav-cta { display: block; text-align: center; padding: 12px !important; }
   section { padding: 64px 0; }
-  #positions { padding-top: 48px; }
-  #page-header { padding-top: calc(var(--nav-h) + 36px); }
-  .page-header-inner { padding-bottom: 34px; }
+  #positions { padding-top: 22px; }
+  #page-header { padding-top: calc(var(--nav-h) + 28px); }
+  .page-header-inner { padding-bottom: 24px; }
   .pos-card { padding: 20px 20px; }
   .pos-port { font-size: 23px; }
   .part-summary { padding: 18px 20px; }
@@ -913,12 +931,7 @@ footer {
 <!-- === POSITIONS (live from Google Sheets, static snapshot as fallback) === -->
 <section id="positions">
   <div class="container">
-    <div class="reveal">
-      <p class="section-label">Current positions</p>
-      <h2 class="section-title">Where our vessels open</h2>
-      <p class="section-desc">Positions are indicative and subject to change without notice. Please confirm with the chartering desk before firming any offer.</p>
-    </div>
-
+    <h2 class="sr-only">Current positions</h2>
     <div class="positions-grid reveal" id="positions-grid">
       <!-- Static snapshot: shown before the live feed loads, and kept if it fails.
            Update these three cards only when the fallback itself goes stale. -->
@@ -963,6 +976,7 @@ footer {
       </article>
     </div>
 
+    <p class="pos-disclaimer">Positions are indicative and subject to change without notice. Please confirm with the chartering desk before firming any offer.</p>
     <p class="pos-stale" id="pos-stale" hidden></p>
 
     <!-- Company standing details -->
@@ -1197,7 +1211,7 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.1.4';
+const APP_VERSION = 'V1.1.5';
 
 /* Must match APP_VERSION in index.html so both pages share one cache bucket.
    If they differ, each page's service worker deletes the other's cache. */
