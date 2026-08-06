@@ -404,27 +404,28 @@ footer {
 .positions-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 14px;
 }
+/* One full-width row per vessel. Never split into columns: the fleet size is
+   odd, so any column count leaves a gap in the last row. */
 .pos-card {
   background: var(--card-bg);
   border: 1px solid rgba(249,115,22,0.32);
   border-radius: 6px;
-  padding: 26px 28px;
-  display: flex;
-  flex-direction: column;
+  padding: 24px 26px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 0 16px;
   transition: background 0.2s, border-color 0.2s;
 }
+.pos-cell-name  { grid-column: 1; }
+.pos-cell-badge { grid-column: 2; justify-self: end; }
+.pos-cell-pos, .pos-cell-cargo, .pos-note { grid-column: 1 / -1; }
 .pos-card:hover { background: var(--card-hover); border-color: rgba(249,115,22,0.5); }
 .pos-card.is-fixed { border-color: var(--border); }
 .pos-card.is-fixed:hover { border-color: var(--border-mid); }
-.pos-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 18px;
-}
+.pos-cell-pos { margin-top: 16px; }
 .pos-name {
   font-family: var(--font-head);
   font-size: 16px;
@@ -453,7 +454,7 @@ footer {
 }
 .pos-port {
   font-family: var(--font-head);
-  font-size: 26px;
+  font-size: 25px;
   font-weight: 700;
   color: var(--orange);
   line-height: 1.15;
@@ -467,10 +468,8 @@ footer {
   font-size: 15px;
   font-weight: 500;
   color: var(--text-primary);
-  margin-bottom: 20px;
 }
-.pos-field { margin-bottom: 14px; }
-.pos-field:last-child { margin-bottom: 0; }
+.pos-cell-cargo { margin-top: 18px; }
 .pos-field-label {
   font-size: 10px;
   color: var(--text-muted);
@@ -484,7 +483,7 @@ footer {
   line-height: 1.6;
 }
 .pos-note {
-  margin-top: auto;
+  margin-top: 18px;
   padding-top: 16px;
   border-top: 1px solid var(--border);
   font-size: 12px;
@@ -785,7 +784,17 @@ footer {
 @media (min-width: 768px) {
   .nav-toggle { display: none; }
   .nav-links { display: flex !important; }
-  .positions-grid { grid-template-columns: 1fr 1fr; }
+  .pos-card {
+    grid-template-columns: minmax(170px, 1fr) minmax(150px, 1fr) minmax(210px, 1.7fr) auto;
+    align-items: center;
+    gap: 0 28px;
+    padding: 22px 26px;
+  }
+  .pos-cell-name  { grid-column: 1; }
+  .pos-cell-pos   { grid-column: 2; margin-top: 0; }
+  .pos-cell-cargo { grid-column: 3; margin-top: 0; }
+  .pos-cell-badge { grid-column: 4; align-self: center; }
+  .pos-note { grid-column: 1 / -1; margin-top: 18px; }
   .meta-strip { grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
   .meta-strip .meta-item { border-radius: 4px; }
   .terms-grid { grid-template-columns: 1fr 1fr; }
@@ -797,7 +806,7 @@ footer {
    === RESPONSIVE: DESKTOP (>= 1200px) ===
    ========================================================================== */
 @media (min-width: 1200px) {
-  .positions-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .pos-card { grid-template-columns: minmax(200px, 1fr) minmax(180px, 1fr) minmax(260px, 1.8fr) auto; }
   .terms-grid { grid-template-columns: 1fr 1fr 1fr; }
   .page-title { font-size: 3rem; }
 }
@@ -831,7 +840,7 @@ footer {
   #positions { padding-top: 48px; }
   #page-header { padding-top: calc(var(--nav-h) + 36px); }
   .page-header-inner { padding-bottom: 34px; }
-  .pos-card { padding: 22px 22px; }
+  .pos-card { padding: 20px 20px; }
   .pos-port { font-size: 23px; }
   .part-summary { padding: 18px 20px; }
   .spec-table td { padding: 12px 20px; }
@@ -845,7 +854,6 @@ footer {
 /* iOS 12 flex gap fallback */
 @supports not (gap: 1px) {
   .nav-links li + li { margin-left: 30px; }
-  .pos-head > * + * { margin-left: 12px; }
   .updated-line > * + * { margin-left: 10px; }
   .part-brief > * + * { margin-left: 14px; }
   .cta-actions > * + * { margin-top: 12px; }
@@ -915,13 +923,13 @@ footer {
       <!-- Static snapshot: shown before the live feed loads, and kept if it fails.
            Update these three cards only when the fallback itself goes stale. -->
       <article class="pos-card">
-        <div class="pos-head">
-          <h3 class="pos-name">MV HAI DUONG 09</h3>
-          <span class="pos-badge">Open</span>
+        <div class="pos-cell-name"><h3 class="pos-name">MV HAI DUONG 09</h3></div>
+        <div class="pos-cell-badge"><span class="pos-badge">Open</span></div>
+        <div class="pos-cell-pos">
+          <p class="pos-port">Kosichang</p>
+          <p class="pos-date">Prompt</p>
         </div>
-        <p class="pos-port">Kosichang</p>
-        <p class="pos-date">Prompt</p>
-        <div class="pos-field">
+        <div class="pos-cell-cargo">
           <p class="pos-field-label">Last cargoes</p>
           <p class="pos-field-value">Steel / equipment</p>
         </div>
@@ -929,26 +937,26 @@ footer {
       </article>
 
       <article class="pos-card">
-        <div class="pos-head">
-          <h3 class="pos-name">MV HAI DUONG 68</h3>
-          <span class="pos-badge">Open</span>
+        <div class="pos-cell-name"><h3 class="pos-name">MV HAI DUONG 68</h3></div>
+        <div class="pos-cell-badge"><span class="pos-badge">Open</span></div>
+        <div class="pos-cell-pos">
+          <p class="pos-port">Tuticorin</p>
+          <p class="pos-date">10 Aug 2026</p>
         </div>
-        <p class="pos-port">Tuticorin</p>
-        <p class="pos-date">10 Aug 2026</p>
-        <div class="pos-field">
+        <div class="pos-cell-cargo">
           <p class="pos-field-label">Last cargoes</p>
           <p class="pos-field-value">Limestone in bulk, cement in 50kg bags and jumbo bags, steel / equipment, calcium carbonate in jumbo bags</p>
         </div>
       </article>
 
       <article class="pos-card">
-        <div class="pos-head">
-          <h3 class="pos-name">MV HAI DUONG 36</h3>
-          <span class="pos-badge">Open</span>
+        <div class="pos-cell-name"><h3 class="pos-name">MV HAI DUONG 36</h3></div>
+        <div class="pos-cell-badge"><span class="pos-badge">Open</span></div>
+        <div class="pos-cell-pos">
+          <p class="pos-port">ECI</p>
+          <p class="pos-date">20 Aug 2026</p>
         </div>
-        <p class="pos-port">ECI</p>
-        <p class="pos-date">20 Aug 2026</p>
-        <div class="pos-field">
+        <div class="pos-cell-cargo">
           <p class="pos-field-label">Last cargoes</p>
           <p class="pos-field-value">Steel, equipment, vehicles</p>
         </div>
@@ -1189,7 +1197,7 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.1.3';
+const APP_VERSION = 'V1.1.4';
 
 /* Must match APP_VERSION in index.html so both pages share one cache bucket.
    If they differ, each page's service worker deletes the other's cache. */
@@ -1304,7 +1312,7 @@ function formatDate(raw) {
 function statusOf(row) {
   const raw = String(row.status || '').trim().toUpperCase();
   if (raw === 'HIDDEN' || raw === 'HIDE' || raw === 'OFF') return 'hidden';
-  if (raw === 'FIXED' || raw === 'ON SUBS' || raw === 'SUBS') return 'fixed';
+  if (raw === 'FIXED' || raw === 'ON SUB' || raw === 'ON SUBS' || raw === 'SUBS' || raw === 'SUB') return 'fixed';
   return 'open';
 }
 
@@ -1321,15 +1329,15 @@ function cardHTML(row) {
   let html = '';
 
   html += '<article class="pos-card' + (state === 'fixed' ? ' is-fixed' : '') + '">';
-  html += '<div class="pos-head">';
-  html += '<h3 class="pos-name">' + esc(row.vessel) + '</h3>';
-  html += '<span class="pos-badge' + (state === 'fixed' ? ' badge-neutral' : '') + '">' + esc(statusLabel(state, row)) + '</span>';
-  html += '</div>';
+  html += '<div class="pos-cell-name"><h3 class="pos-name">' + esc(row.vessel) + '</h3></div>';
+  html += '<div class="pos-cell-badge"><span class="pos-badge' + (state === 'fixed' ? ' badge-neutral' : '') + '">' + esc(statusLabel(state, row)) + '</span></div>';
+  html += '<div class="pos-cell-pos">';
   html += '<p class="pos-port">' + esc(row.openPort || 'To be advised') + '</p>';
   if (dateText) html += '<p class="pos-date">' + esc(dateText) + '</p>';
+  html += '</div>';
 
   if (row.lastCargoes) {
-    html += '<div class="pos-field">';
+    html += '<div class="pos-cell-cargo">';
     html += '<p class="pos-field-label">Last cargoes</p>';
     html += '<p class="pos-field-value">' + esc(row.lastCargoes) + '</p>';
     html += '</div>';
