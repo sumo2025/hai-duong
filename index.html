@@ -1142,7 +1142,7 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.2.5';
+const APP_VERSION = 'V1.2.6';
 
 // === NAVBAR TOGGLE (mobile) ===
 const navToggle = document.getElementById('navToggle');
@@ -1245,7 +1245,7 @@ window.addEventListener('scroll', function() {
     '}));self.clients.claim();});' +
     'self.addEventListener("fetch",function(e){' +
     'if(e.request.method!=="GET")return;' +
-    'if(e.request.url.indexOf("docs.google.com")>-1)return;' +
+    'if(e.request.url.indexOf("docs.google.com")>-1||e.request.url.indexOf("googleusercontent.com")>-1)return;' +
     'if(e.request.mode==="navigate"){' +
     'e.respondWith(fetch(e.request).then(function(r){' +
     'var rc=r.clone();caches.open(C).then(function(cache){cache.put(e.request,rc);});return r;' +

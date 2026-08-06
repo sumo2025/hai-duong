@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com https://docs.google.com; img-src 'self' data: blob: https://res.cloudinary.com; manifest-src 'self' blob:; object-src 'none'; font-src 'self' data: https://fonts.gstatic.com;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com https://docs.google.com https://*.googleusercontent.com; img-src 'self' data: blob: https://res.cloudinary.com; manifest-src 'self' blob:; object-src 'none'; font-src 'self' data: https://fonts.gstatic.com;">
 <title>Open Tonnage - Hai Duong Maritime Co., Ltd</title>
 <meta name="description" content="Current open positions for the Hai Duong Maritime fleet. Three self-gear tween-decker bulkers of approx 11,000 DWT trading Asia Pacific. Full particulars and last cargoes.">
 
@@ -1189,11 +1189,11 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.1.1';
+const APP_VERSION = 'V1.1.2';
 
 /* Must match APP_VERSION in index.html so both pages share one cache bucket.
    If they differ, each page's service worker deletes the other's cache. */
-const SW_VERSION = 'V1.2.5';
+const SW_VERSION = 'V1.2.6';
 
 /* Published Google Sheet (File > Share > Publish to web > TSV).
    Columns are matched by header NAME, not position - see COLUMN_ALIASES. */
@@ -1407,8 +1407,11 @@ function loadPositions() {
     if (renderPositions(rows)) {
       lsSet(LS_KEY, JSON.stringify(rows));
     }
-  }).catch(function () {
+  }).catch(function (err) {
     // Static snapshot or cached data stays on screen; flag it as possibly stale.
+    if (window.console && console.warn) {
+      console.warn('[open-tonnage] live feed unavailable:', err && err.message ? err.message : err);
+    }
     showStaleNotice();
   });
 }
@@ -1599,7 +1602,7 @@ function initServiceWorker() {
     '}));self.clients.claim();});' +
     'self.addEventListener("fetch",function(e){' +
     'if(e.request.method!=="GET")return;' +
-    'if(e.request.url.indexOf("docs.google.com")>-1)return;' +
+    'if(e.request.url.indexOf("docs.google.com")>-1||e.request.url.indexOf("googleusercontent.com")>-1)return;' +
     'if(e.request.mode==="navigate"){' +
     'e.respondWith(fetch(e.request).then(function(r){' +
     'var rc=r.clone();caches.open(C).then(function(cache){cache.put(e.request,rc);});return r;' +
