@@ -1,0 +1,7 @@
+# Hai Duong Maritime Co., Ltd - hdmaritime.com.vn
+# Public company website. All pages are open to search engines.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://hdmaritime.com.vn/sitemap.xml
