@@ -94,7 +94,9 @@
   --z-toast:     500;
   --nav-h:       76px;
   /* Vertical rhythm - adjust these two to loosen or tighten the whole page */
-  --sec-y:       60px;   /* section padding, tablet and desktop */
+  --sec-top:     44px;   /* space above a section heading - the colour
+                            change already separates sections */
+  --sec-bot:     60px;   /* space below section content */
   --sec-gap:     40px;   /* gap under a section heading block */
 }
 
@@ -213,7 +215,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* === SECTION BASE === */
-section { padding: var(--sec-y) 0; }
+section { padding: var(--sec-top) 0 var(--sec-bot); }
 .section-label {
   font-size: 10px;
   font-weight: 500;
@@ -346,7 +348,7 @@ footer {
 /* === PAGE HEADER (compact counterpart of the home hero) === */
 #page-header {
   background: var(--navy-deep);
-  padding-top: calc(var(--nav-h) + 44px);
+  padding-top: calc(var(--nav-h) + 40px);
   padding-bottom: 0;
   border-bottom: 1px solid var(--border);
 }
@@ -857,7 +859,7 @@ footer {
     color: var(--navy);
   }
   .nav-cta { display: block; text-align: center; padding: 12px !important; }
-  :root { --sec-y: 48px; --sec-gap: 30px; }
+  :root { --sec-top: 34px; --sec-bot: 48px; --sec-gap: 30px; }
   #positions { padding-top: 22px; }
   #page-header { padding-top: calc(var(--nav-h) + 28px); }
   .page-header-inner { padding-bottom: 24px; }
@@ -1214,11 +1216,11 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.1.7';
+const APP_VERSION = 'V1.1.8';
 
 /* Must match APP_VERSION in index.html so both pages share one cache bucket.
    If they differ, each page's service worker deletes the other's cache. */
-const SW_VERSION = 'V1.2.9';
+const SW_VERSION = 'V1.3.0';
 
 /* Published Google Sheet (File > Share > Publish to web > TSV).
    Columns are matched by header NAME, not position - see COLUMN_ALIASES. */
