@@ -94,7 +94,7 @@
   --z-toast:     500;
   --nav-h:       76px;
   /* Vertical rhythm - adjust these two to loosen or tighten the whole page */
-  --sec-y:       72px;   /* section padding, tablet and desktop */
+  --sec-y:       60px;   /* section padding, tablet and desktop */
   --sec-gap:     40px;   /* gap under a section heading block */
 }
 
@@ -1214,11 +1214,11 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.1.6';
+const APP_VERSION = 'V1.1.7';
 
 /* Must match APP_VERSION in index.html so both pages share one cache bucket.
    If they differ, each page's service worker deletes the other's cache. */
-const SW_VERSION = 'V1.2.8';
+const SW_VERSION = 'V1.2.9';
 
 /* Published Google Sheet (File > Share > Publish to web > TSV).
    Columns are matched by header NAME, not position - see COLUMN_ALIASES. */
