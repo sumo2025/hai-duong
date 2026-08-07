@@ -93,6 +93,9 @@
   --z-nav:       200;
   --z-toast:     500;
   --nav-h:       76px;
+  /* Vertical rhythm - adjust these two to loosen or tighten the whole page */
+  --sec-y:       72px;   /* section padding, tablet and desktop */
+  --sec-gap:     40px;   /* gap under a section heading block */
 }
 
 /* === RESET === */
@@ -210,7 +213,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* === SECTION BASE === */
-section { padding: 96px 0; }
+section { padding: var(--sec-y) 0; }
 .section-label {
   font-size: 10px;
   font-weight: 500;
@@ -243,7 +246,7 @@ section { padding: 96px 0; }
   color: var(--text-muted);
   max-width: 520px;
   line-height: 1.75;
-  margin-bottom: 52px;
+  margin-bottom: var(--sec-gap);
 }
 
 /* === SPEC TABLE (shared look with index.html) === */
@@ -347,7 +350,7 @@ footer {
   padding-bottom: 0;
   border-bottom: 1px solid var(--border);
 }
-.page-header-inner { padding-bottom: 30px; }
+.page-header-inner { padding-bottom: 26px; }
 .page-eyebrow {
   font-size: 11px;
   font-weight: 500;
@@ -533,7 +536,7 @@ footer {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2px;
-  margin-top: 44px;
+  margin-top: 34px;
 }
 .meta-item {
   background: var(--card-bg);
@@ -854,7 +857,7 @@ footer {
     color: var(--navy);
   }
   .nav-cta { display: block; text-align: center; padding: 12px !important; }
-  section { padding: 64px 0; }
+  :root { --sec-y: 48px; --sec-gap: 30px; }
   #positions { padding-top: 22px; }
   #page-header { padding-top: calc(var(--nav-h) + 28px); }
   .page-header-inner { padding-bottom: 24px; }
@@ -1211,11 +1214,11 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.1.5';
+const APP_VERSION = 'V1.1.6';
 
 /* Must match APP_VERSION in index.html so both pages share one cache bucket.
    If they differ, each page's service worker deletes the other's cache. */
-const SW_VERSION = 'V1.2.7';
+const SW_VERSION = 'V1.2.8';
 
 /* Published Google Sheet (File > Share > Publish to web > TSV).
    Columns are matched by header NAME, not position - see COLUMN_ALIASES. */
