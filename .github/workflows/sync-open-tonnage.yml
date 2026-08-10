@@ -1,6 +1,6 @@
 # Reads the published Google Sheet and writes open-tonnage.json into the repo.
-# The website then serves that file from its own domain, so visitors in regions
-# where Google is unreachable (mainland China) still get live positions.
+# The website serves that file from its own domain, so visitors in regions where
+# Google is unreachable (mainland China) still get live positions.
 name: Sync open tonnage
 
 on:
@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  pages: write
 
 concurrency:
   group: sync-open-tonnage
@@ -26,14 +27,27 @@ jobs:
           SHEET_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBOfEEKfDOOG8FJ9_FAHm9G3p0oP67CCz8_JXJXLJ6Uv1ZPoHqJdxZSOUUOZKDboBsTCARzpErJbk/pub?gid=0&single=true&output=tsv'
         run: python3 scripts/build_open_tonnage.py
 
-      - name: Commit if changed
+      - name: Commit and publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if git diff --quiet -- open-tonnage.json; then
             echo "No change - nothing to commit."
             exit 0
           fi
+
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add open-tonnage.json
           git commit -m "chore: sync open tonnage positions"
           git push
+
+          # A push made with GITHUB_TOKEN does not trigger the Pages build
+          # (GitHub blocks that to prevent workflow loops), so request it
+          # explicitly. Without this the repo updates but the live site does not.
+          echo "Requesting a GitHub Pages build..."
+          gh api --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/${GITHUB_REPOSITORY}/pages/builds" \
+            && echo "Pages build requested." \
+            || echo "::warning::Could not request a Pages build - see README-DEPLOY for the fallback."
