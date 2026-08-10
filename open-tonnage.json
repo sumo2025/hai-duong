@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "syncedAt": "2026-08-10T08:20:34Z",
+  "syncedAt": "2026-08-10T08:28:21Z",
   "rows": [
     {
       "vessel": "MV Hai Duong 09",
       "openPort": "Hai Phong",
       "openDate": "05-10th Sept",
-      "lastCargoes": "Woodpulp, wbp, steel products, steel products",
+      "lastCargoes": "woodpulp, wbp, steel products, steel products",
       "note": "",
       "status": "Open",
       "updated": "10-Aug-2026"
@@ -14,7 +14,7 @@
     {
       "vessel": "MV Hai Duong 36",
       "openPort": "Karaikal",
-      "openDate": "22-Aug-2026",
+      "openDate": "23-Aug-2026",
       "lastCargoes": "limestone, steel products, steel cargoes",
       "note": "",
       "status": "Open",
