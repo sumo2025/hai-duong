@@ -1,33 +1,33 @@
 {
   "schema": 1,
-  "syncedAt": "2026-08-10T00:00:00Z",
+  "syncedAt": "2026-08-10T08:16:29Z",
   "rows": [
     {
-      "vessel": "MV HAI DUONG 09",
-      "openPort": "Kosichang",
-      "openDate": "PROMPT",
-      "lastCargoes": "Steel / equipment",
-      "note": "Looking for cargo to port near North Vietnam",
-      "status": "OPEN",
-      "updated": "2026-08-10"
+      "vessel": "MV Hai Duong 09",
+      "openPort": "Hai Phong",
+      "openDate": "05-10th Sept",
+      "lastCargoes": "Woodpulp, wbp, steel products, steel products",
+      "note": "",
+      "status": "Open",
+      "updated": "10-Aug-2026"
     },
     {
-      "vessel": "MV HAI DUONG 68",
-      "openPort": "Tuticorin",
-      "openDate": "2026-08-10",
-      "lastCargoes": "Limestone in bulk, cement in 50kg bags and jumbo bags, steel / equipment, calcium carbonate in jumbo bags",
+      "vessel": "MV Hai Duong 36",
+      "openPort": "Karaikal",
+      "openDate": "22-Aug-2026",
+      "lastCargoes": "limestone, steel products, steel cargoes",
       "note": "",
-      "status": "OPEN",
-      "updated": "2026-08-10"
+      "status": "Open",
+      "updated": "10-Aug-2026"
     },
     {
-      "vessel": "MV HAI DUONG 36",
-      "openPort": "ECI",
-      "openDate": "2026-08-20",
-      "lastCargoes": "Steel, equipment, vehicles",
+      "vessel": "MV Hai Duong 68",
+      "openPort": "Colombo",
+      "openDate": "Mid Sept",
+      "lastCargoes": "Steel products, limestone, cement and vehicle, steel products",
       "note": "",
-      "status": "OPEN",
-      "updated": "2026-08-10"
+      "status": "Open",
+      "updated": "10-Aug-2026"
     }
   ]
 }
