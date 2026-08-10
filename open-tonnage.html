@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com https://docs.google.com https://*.googleusercontent.com; img-src 'self' data: blob: https://res.cloudinary.com; manifest-src 'self' blob:; object-src 'none'; font-src 'self' data: https://fonts.gstatic.com;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; img-src 'self' data: blob: https://res.cloudinary.com; manifest-src 'self' blob:; object-src 'none'; font-src 'self' data: https://fonts.gstatic.com;">
 <title>Open Tonnage - Hai Duong Maritime Co., Ltd</title>
 <meta name="description" content="Current open positions for the Hai Duong Maritime fleet. Three self-gear tween-decker bulkers of approx 11,000 DWT trading Asia Pacific. Full particulars and last cargoes.">
 
@@ -1216,15 +1216,16 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.1.8';
+const APP_VERSION = 'V1.2.0';
 
 /* Must match APP_VERSION in index.html so both pages share one cache bucket.
    If they differ, each page's service worker deletes the other's cache. */
-const SW_VERSION = 'V1.3.0';
+const SW_VERSION = 'V1.3.1';
 
-/* Published Google Sheet (File > Share > Publish to web > TSV).
-   Columns are matched by header NAME, not position - see COLUMN_ALIASES. */
-const SHEET_TSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRhBOfEEKfDOOG8FJ9_FAHm9G3p0oP67CCz8_JXJXLJ6Uv1ZPoHqJdxZSOUUOZKDboBsTCARzpErJbk/pub?gid=0&single=true&output=tsv';
+/* Positions are served from our own domain. A GitHub Action reads the Google
+   Sheet and writes this file into the repo, so the browser never contacts
+   Google - which matters because Google is unreachable in mainland China. */
+const POSITIONS_URL = './open-tonnage.json';
 
 const LS_KEY = 'hdmot_positions_cache';
 const FETCH_TIMEOUT_MS = 8000;
@@ -1248,63 +1249,40 @@ function lsSet(key, value) {
   try { localStorage.setItem(key, value); } catch (e) {}
 }
 
-// === TSV PARSING ===
-// Header names are normalised (lowercase, letters and digits only) so that
-// "Open Port", "open_port" and "OPENPORT" all resolve to the same field.
-const COLUMN_ALIASES = {
-  vessel:      ['vessel', 'vesselname', 'name', 'ship', 'shipname'],
-  openPort:    ['openport', 'port', 'openarea', 'position'],
-  openDate:    ['opendate', 'date', 'open', 'eta', 'laycan'],
-  lastCargoes: ['lastcargoes', 'lastcargo', 'cargoes', 'cargo', 'lastcargos'],
-  note:        ['note', 'notes', 'remark', 'remarks', 'comment'],
-  status:      ['status', 'state'],
-  updated:     ['updated', 'updatedat', 'lastupdated', 'updateddate']
-};
-
-function normaliseHeader(h) {
-  return String(h || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-}
-
-function buildColumnMap(headerCells) {
-  const map = {};
-  const normalised = headerCells.map(normaliseHeader);
-  Object.keys(COLUMN_ALIASES).forEach(function (field) {
-    const aliases = COLUMN_ALIASES[field];
-    for (let i = 0; i < normalised.length; i++) {
-      if (aliases.indexOf(normalised[i]) !== -1) { map[field] = i; return; }
-    }
-  });
-  return map;
-}
-
-function cleanCell(value) {
-  let out = String(value == null ? '' : value).trim();
-  // Sheets wraps a cell in quotes when it contains a tab or newline
-  if (out.length > 1 && out.charAt(0) === '"' && out.charAt(out.length - 1) === '"') {
-    out = out.slice(1, -1).replace(/""/g, '"');
+// === JSON PARSING ===
+// Guards against prototype pollution before any property is read.
+function safeParseJSON(str) {
+  const raw = JSON.parse(str);
+  if (raw && typeof raw === 'object') {
+    if (Object.prototype.hasOwnProperty.call(raw, '__proto__') ||
+        Object.prototype.hasOwnProperty.call(raw, 'constructor'))
+      throw new Error('Unsafe JSON');
   }
+  return raw;
+}
+
+const FIELDS = ['vessel', 'openPort', 'openDate', 'lastCargoes', 'note', 'status', 'updated'];
+
+function cleanField(value) {
+  let out = typeof value === 'string' ? value.trim() : '';
   if (out.length > MAX_FIELD_LEN) out = out.slice(0, MAX_FIELD_LEN) + '...';
   return out;
 }
 
-function parseTSV(text) {
-  const lines = String(text).split(/\r\n|\n|\r/).filter(function (l) { return l.trim() !== ''; });
-  if (lines.length < 2) throw new Error('Sheet has no data rows');
-
-  const columnMap = buildColumnMap(lines[0].split('\t'));
-  if (columnMap.vessel === undefined || columnMap.openPort === undefined) {
-    throw new Error('Sheet is missing a "vessel" or "open_port" column');
+function parsePositions(text) {
+  const data = safeParseJSON(text);
+  if (!data || typeof data !== 'object' || !Array.isArray(data.rows)) {
+    throw new Error('Unexpected positions file format');
   }
-
   const rows = [];
-  for (let i = 1; i < lines.length && rows.length < MAX_ROWS; i++) {
-    const cells = lines[i].split('\t');
+  for (let i = 0; i < data.rows.length && rows.length < MAX_ROWS; i++) {
+    const src = data.rows[i];
+    if (!src || typeof src !== 'object') continue;
     const row = {};
-    Object.keys(columnMap).forEach(function (field) {
-      row[field] = cleanCell(cells[columnMap[field]]);
+    FIELDS.forEach(function (f) {
+      row[f] = Object.prototype.hasOwnProperty.call(src, f) ? cleanField(src[f]) : '';
     });
-    if (!row.vessel) continue;
-    rows.push(row);
+    if (row.vessel) rows.push(row);
   }
   if (!rows.length) throw new Error('No valid vessel rows found');
   return rows;
@@ -1429,8 +1407,8 @@ function loadPositions() {
   if (!('fetch' in window) || !('Promise' in window)) return;
 
   // 2. Then refresh from the sheet.
-  fetchWithTimeout(SHEET_TSV_URL + '&_=' + Date.now()).then(function (text) {
-    const rows = parseTSV(text);
+  fetchWithTimeout(POSITIONS_URL + '?t=' + Date.now()).then(function (text) {
+    const rows = parsePositions(text);
     if (renderPositions(rows)) {
       lsSet(LS_KEY, JSON.stringify(rows));
     }
@@ -1617,8 +1595,8 @@ function initManifest() {
 
 // === SERVICE WORKER ===
 // Same strategy as index.html: network-first for pages, cache-first for assets.
-// Cross-origin requests to docs.google.com are passed straight through so the
-// open tonnage feed is never served from cache.
+// open-tonnage.json is passed straight through so live positions are never
+// served from cache.
 function initServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
   const swCode = 'var V="' + SW_VERSION + '",C="hd-maritime-"+V;' +
@@ -1629,7 +1607,7 @@ function initServiceWorker() {
     '}));self.clients.claim();});' +
     'self.addEventListener("fetch",function(e){' +
     'if(e.request.method!=="GET")return;' +
-    'if(e.request.url.indexOf("docs.google.com")>-1||e.request.url.indexOf("googleusercontent.com")>-1)return;' +
+    'if(e.request.url.indexOf("open-tonnage.json")>-1)return;' +
     'if(e.request.mode==="navigate"){' +
     'e.respondWith(fetch(new Request(e.request.url,{cache:"reload",credentials:"same-origin"})).then(function(r){' +
     'var rc=r.clone();caches.open(C).then(function(cache){cache.put(e.request,rc);});return r;' +

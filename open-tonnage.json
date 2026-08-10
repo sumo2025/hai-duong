@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "syncedAt": "2026-08-10T00:00:00Z",
+  "rows": [
+    {
+      "vessel": "MV HAI DUONG 09",
+      "openPort": "Kosichang",
+      "openDate": "PROMPT",
+      "lastCargoes": "Steel / equipment",
+      "note": "Looking for cargo to port near North Vietnam",
+      "status": "OPEN",
+      "updated": "2026-08-10"
+    },
+    {
+      "vessel": "MV HAI DUONG 68",
+      "openPort": "Tuticorin",
+      "openDate": "2026-08-10",
+      "lastCargoes": "Limestone in bulk, cement in 50kg bags and jumbo bags, steel / equipment, calcium carbonate in jumbo bags",
+      "note": "",
+      "status": "OPEN",
+      "updated": "2026-08-10"
+    },
+    {
+      "vessel": "MV HAI DUONG 36",
+      "openPort": "ECI",
+      "openDate": "2026-08-20",
+      "lastCargoes": "Steel, equipment, vehicles",
+      "note": "",
+      "status": "OPEN",
+      "updated": "2026-08-10"
+    }
+  ]
+}
