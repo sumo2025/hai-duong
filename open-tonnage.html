@@ -507,6 +507,25 @@ footer {
 }
 .pos-note-inner { display: block; padding-left: 12px; border-left: 2px solid var(--orange); }
 
+/* Loading placeholder - same height as a real card, so nothing jumps */
+.pos-skeleton {
+  height: 92px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  opacity: 0.55;
+  animation: posPulse 1.5s ease-in-out infinite;
+}
+.pos-skeleton:nth-child(3) { animation-delay: 0.18s; }
+.pos-skeleton:nth-child(4) { animation-delay: 0.36s; }
+@keyframes posPulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.6; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pos-skeleton { animation: none; opacity: 0.4; }
+}
+
 /* Loading / error states */
 .pos-status-msg {
   grid-column: 1 / -1;
@@ -864,6 +883,7 @@ footer {
   #page-header { padding-top: calc(var(--nav-h) + 28px); }
   .page-header-inner { padding-bottom: 24px; }
   .pos-card { padding: 20px 20px; }
+  .pos-skeleton { height: 150px; }
   .pos-port { font-size: 23px; }
   .part-summary { padding: 18px 20px; }
   .spec-table td { padding: 12px 20px; }
@@ -922,10 +942,10 @@ footer {
       <p class="page-eyebrow">Chartering</p>
       <h1 class="page-title">Open <em>tonnage</em></h1>
       <p class="page-sub">Current positions for our three self-gear tween-deckers. Suitable cargoes welcome - please contact the chartering desk with your enquiry.</p>
-      <p class="updated-line">
+      <p class="updated-line" id="updated-line" hidden>
         <span class="updated-dot" aria-hidden="true"></span>
         <span>Positions last updated</span>
-        <strong id="updated-value">04 Aug 2026</strong>
+        <strong id="updated-value"></strong>
       </p>
     </div>
   </div>
@@ -937,49 +957,16 @@ footer {
 <section id="positions">
   <div class="container">
     <h2 class="sr-only">Current positions</h2>
-    <div class="positions-grid reveal" id="positions-grid">
-      <!-- Static snapshot: shown before the live feed loads, and kept if it fails.
-           Update these three cards only when the fallback itself goes stale. -->
-      <article class="pos-card">
-        <div class="pos-cell-name"><h3 class="pos-name">MV HAI DUONG 09</h3></div>
-        <div class="pos-cell-badge"><span class="pos-badge">Open</span></div>
-        <div class="pos-cell-pos">
-          <p class="pos-port">Kosichang</p>
-          <p class="pos-date">Prompt</p>
-        </div>
-        <div class="pos-cell-cargo">
-          <p class="pos-field-label">Last cargoes</p>
-          <p class="pos-field-value">Steel / equipment</p>
-        </div>
-        <div class="pos-note"><span class="pos-note-inner">Looking for cargo to port near North Vietnam</span></div>
-      </article>
-
-      <article class="pos-card">
-        <div class="pos-cell-name"><h3 class="pos-name">MV HAI DUONG 68</h3></div>
-        <div class="pos-cell-badge"><span class="pos-badge">Open</span></div>
-        <div class="pos-cell-pos">
-          <p class="pos-port">Tuticorin</p>
-          <p class="pos-date">10 Aug 2026</p>
-        </div>
-        <div class="pos-cell-cargo">
-          <p class="pos-field-label">Last cargoes</p>
-          <p class="pos-field-value">Limestone in bulk, cement in 50kg bags and jumbo bags, steel / equipment, calcium carbonate in jumbo bags</p>
-        </div>
-      </article>
-
-      <article class="pos-card">
-        <div class="pos-cell-name"><h3 class="pos-name">MV HAI DUONG 36</h3></div>
-        <div class="pos-cell-badge"><span class="pos-badge">Open</span></div>
-        <div class="pos-cell-pos">
-          <p class="pos-port">ECI</p>
-          <p class="pos-date">20 Aug 2026</p>
-        </div>
-        <div class="pos-cell-cargo">
-          <p class="pos-field-label">Last cargoes</p>
-          <p class="pos-field-value">Steel, equipment, vehicles</p>
-        </div>
-      </article>
+    <div class="positions-grid reveal" id="positions-grid" aria-busy="true">
+      <p class="sr-only">Loading current positions</p>
+      <div class="pos-skeleton" aria-hidden="true"></div>
+      <div class="pos-skeleton" aria-hidden="true"></div>
+      <div class="pos-skeleton" aria-hidden="true"></div>
     </div>
+
+    <noscript>
+      <p class="pos-status-msg">Current vessel positions are loaded dynamically and need JavaScript enabled. Please contact the chartering desk for our latest open tonnage.</p>
+    </noscript>
 
     <p class="pos-disclaimer">Positions are indicative and subject to change without notice. Please confirm with the chartering desk before firming any offer.</p>
     <p class="pos-stale" id="pos-stale" hidden></p>
@@ -1216,11 +1203,11 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.2.0';
+const APP_VERSION = 'V1.2.1';
 
 /* Must match APP_VERSION in index.html so both pages share one cache bucket.
    If they differ, each page's service worker deletes the other's cache. */
-const SW_VERSION = 'V1.3.1';
+const SW_VERSION = 'V1.3.2';
 
 /* Positions are served from our own domain. A GitHub Action reads the Google
    Sheet and writes this file into the repo, so the browser never contacts
@@ -1354,14 +1341,19 @@ function renderPositions(rows) {
   if (!visible.length) return false;
 
   grid.innerHTML = visible.map(cardHTML).join('');
+  grid.removeAttribute('aria-busy');
 
   const updatedEl = document.getElementById('updated-value');
+  const updatedLine = document.getElementById('updated-line');
   if (updatedEl) {
     let stamp = '';
     for (let i = 0; i < rows.length; i++) {
       if (rows[i].updated) { stamp = formatDate(rows[i].updated); break; }
     }
-    if (stamp) updatedEl.textContent = stamp;
+    if (stamp) {
+      updatedEl.textContent = stamp;
+      if (updatedLine) updatedLine.hidden = false;
+    }
   }
   return true;
 }
@@ -1369,8 +1361,17 @@ function renderPositions(rows) {
 function showStaleNotice() {
   const el = document.getElementById('pos-stale');
   if (!el) return;
-  el.textContent = 'Live positions could not be loaded just now, so the schedule above may not be current. Please contact the chartering desk to confirm before firming any offer.';
+  el.textContent = 'Live positions could not be refreshed just now, so the schedule above may not be current. Please contact the chartering desk to confirm before firming any offer.';
   el.hidden = false;
+}
+
+// Nothing to show at all: no cached copy and the feed did not load.
+function showUnavailable() {
+  const grid = document.getElementById('positions-grid');
+  if (!grid) return;
+  grid.removeAttribute('aria-busy');
+  grid.innerHTML = '<p class="pos-status-msg">Current positions are temporarily unavailable. ' +
+    'Please contact the chartering desk for our latest open tonnage - we reply to every enquiry.</p>';
 }
 
 // === LOAD ===
@@ -1394,30 +1395,37 @@ function fetchWithTimeout(url) {
 }
 
 function loadPositions() {
-  // 1. Paint the last known good data immediately so the page is never empty
-  //    while the network request is in flight.
+  // 1. Paint the last known good data immediately so a returning visitor sees
+  //    positions straight away instead of a loading state.
+  let hasCachedView = false;
   const cached = lsGet(LS_KEY);
   if (cached) {
     try {
       const rows = JSON.parse(cached);
-      if (Array.isArray(rows) && rows.length) renderPositions(rows);
+      if (Array.isArray(rows) && rows.length) hasCachedView = renderPositions(rows);
     } catch (e) {}
   }
 
-  if (!('fetch' in window) || !('Promise' in window)) return;
+  if (!('fetch' in window) || !('Promise' in window)) {
+    if (!hasCachedView) showUnavailable();
+    return;
+  }
 
-  // 2. Then refresh from the sheet.
+  // 2. Then refresh from our own domain.
   fetchWithTimeout(POSITIONS_URL + '?t=' + Date.now()).then(function (text) {
     const rows = parsePositions(text);
     if (renderPositions(rows)) {
       lsSet(LS_KEY, JSON.stringify(rows));
+    } else if (!hasCachedView) {
+      showUnavailable();
     }
   }).catch(function (err) {
-    // Static snapshot or cached data stays on screen; flag it as possibly stale.
     if (window.console && console.warn) {
-      console.warn('[open-tonnage] live feed unavailable:', err && err.message ? err.message : err);
+      console.warn('[open-tonnage] positions feed unavailable:', err && err.message ? err.message : err);
     }
-    showStaleNotice();
+    // Cached data stays on screen and is flagged as possibly stale; with no
+    // cache there is nothing to show, so point the visitor at the desk.
+    hasCachedView ? showStaleNotice() : showUnavailable();
   });
 }
 
