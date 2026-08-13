@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "syncedAt": "2026-08-13T08:50:37Z",
+  "syncedAt": "2026-08-13T10:01:38Z",
   "rows": [
     {
       "vessel": "MV Hai Duong 09",
@@ -17,8 +17,8 @@
       "openDate": "23-Aug-2026",
       "lastCargoes": "limestone, steel products, steel cargoes",
       "note": "",
-      "status": "Open",
-      "updated": "10-Aug-2026"
+      "status": "On sub",
+      "updated": "13-Aug-2026"
     },
     {
       "vessel": "MV Hai Duong 68",
