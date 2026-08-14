@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "syncedAt": "2026-08-11T02:26:57Z",
+  "syncedAt": "2026-08-13T23:57:51Z",
   "rows": [
     {
       "vessel": "MV Hai Duong 09",
@@ -9,7 +9,7 @@
       "lastCargoes": "woodpulp, wbp, steel products, steel products",
       "note": "",
       "status": "Open",
-      "updated": "10-Aug-2026"
+      "updated": "13-Aug-2026"
     },
     {
       "vessel": "MV Hai Duong 36",
@@ -17,8 +17,8 @@
       "openDate": "23-Aug-2026",
       "lastCargoes": "limestone, steel products, steel cargoes",
       "note": "",
-      "status": "Open",
-      "updated": "10-Aug-2026"
+      "status": "On sub",
+      "updated": "13-Aug-2026"
     },
     {
       "vessel": "MV Hai Duong 68",
@@ -27,7 +27,7 @@
       "lastCargoes": "Steel products, limestone, cement and vehicle, steel products",
       "note": "",
       "status": "Open",
-      "updated": "10-Aug-2026"
+      "updated": "13-Aug-2026"
     }
   ]
 }
