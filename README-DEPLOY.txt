@@ -1,50 +1,55 @@
-HAI DUONG MARITIME - OPEN TONNAGE
-=================================
-index.html        V1.3.0   (khong doi so voi lan truoc)
-open-tonnage.html V1.2.1
+HAI DUONG MARITIME - TOI UU TOC DO TAI TRANG
+============================================
+index.html        V1.4.1
+open-tonnage.html V1.3.1
 
-THAY DOI LAN NAY
-----------------
-Bo hoan toan 3 the tau in cung trong HTML. Trang gio hien
-skeleton loading roi thay bang du lieu that tu open-tonnage.json.
+THAY DOI
+--------
+- Go toan bo anh base64 khoi HTML: index.html tu 583 KB xuong 46 KB
+- Anh chuyen sang thu muc images/ (nen lai tu file goc)
+- Logo va icon roi Cloudinary, ve GitHub -> khong con phu thuoc dich vu
+  ngoai, an toan cho khach o Trung Quoc
+- Them width/height cho moi <img> -> khong con nhay layout khi tai
+- Manifest PWA dung URL tuyet doi cho icon (Blob URL khong resolve
+  duoc duong dan tuong doi)
+- Bo user-scalable=no -> nguoi dung phong to duoc trang tren dien thoai
 
-CAU TRUC - dat tat ca vao GOC repo
-----------------------------------
-  index.html
-  open-tonnage.html
-  open-tonnage.json                       <- Action tu ghi de, dung sua tay
-  robots.txt
-  sitemap.xml
-  scripts/build_open_tonnage.py
-  .github/workflows/sync-open-tonnage.yml
-
-LUU Y: thu muc ".github" bat dau bang dau cham nen Windows an no.
-Bat "Hidden items" trong tab View cua File Explorer neu khong thay.
-
-QUY TRINH HANG NGAY
--------------------
-Chi sua Google Sheet. Toi da 20 phut sau web tu doi.
-Can gap: tab Actions -> Sync open tonnage -> Run workflow.
-
-LUON BAM "Pull origin" TRONG GITHUB DESKTOP TRUOC KHI COMMIT.
-Action tu commit len GitHub nen may ban se bi cham lai neu khong pull.
-Khong bao gio sua open-tonnage.json tren may - Google Sheet la nguon duy nhat.
-
-COT TRONG SHEET
----------------
-vessel | open_port | open_date | last_cargoes | note | status | updated
-open_date: 2026-08-14 -> hien "14 Aug 2026". Gia tri khac hien nguyen van.
-status:    OPEN / ON SUB / FIXED / HIDDEN (HIDDEN an tau khoi trang).
-
-SUA THONG SO TAU (particulars)
+VE width/height TREN THE <img>
 ------------------------------
-Nam trong open-tonnage.html. Sua truc tiep tren github.com:
-mo file -> bieu tuong but chi -> Ctrl+F tim gia tri -> Commit.
+Hai thuoc tinh nay KHONG ep kich thuoc anh va khong lam cat anh.
+CSS luon thang thuoc tinh HTML:
+  .about-img-item img { width: 100%; height: auto; }
+  logo: style="height:60px;width:auto"
+Chung chi bao truoc TI LE KHUNG HINH de trinh duyet chua san cho,
+tranh nhay layout khi anh tai xong. Gia tri dat dung bang pixel that
+cua tung file.
+QUAN TRONG: neu thay anh trong images/ bang anh ti le khac, phai sua
+hai con so nay cho khop - hoac xoa han chung di cung duoc.
 
-CHINH KHOANG CACH GIAO DIEN
----------------------------
-Trong <style> cua ca hai file:
-  --sec-top / --sec-bot / --sec-gap
-Sua cung gia tri o CA HAI file de hai trang khong lech nhip.
+FILE CAN PUSH
+-------------
+  index.html                    ghi de
+  open-tonnage.html             ghi de
+  images/                       THU MUC MOI - push ca thu muc
+    hero.jpg              139 KB   anh nen trang chu (MV Hai Duong 68)
+    mv-36.jpg             117 KB   muc About
+    mv-09.jpg             150 KB   muc About
+    logo.png                9 KB   navbar + favicon
+    icon-512.png           34 KB   PWA + og:image cho mang xa hoi
+    icon-192.png            7 KB   PWA
+    apple-touch-icon.png    6 KB   iOS Add to Home Screen
+
+KHONG DUNG DEN: open-tonnage.json (Action tu quan ly - dung ghi de)
+
+SAU KHI PUSH
+------------
+1. Kiem tra anh hien day du o trang chu va trang open tonnage
+2. Chay lai https://pagespeed.web.dev/ - Performance nen tang dang ke
+3. Neu anh khong hien: kiem tra thu muc images/ da len GitHub chua
+
+DOI ANH SAU NAY
+---------------
+Thay file trong images/ giu nguyen ten la xong, khong phai sua HTML.
+Nen resize truoc: hero 1600px rong, anh About 1200px rong, chat luong 72-82.
 
 Developed by Pavel Hai
