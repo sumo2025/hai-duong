@@ -79,10 +79,13 @@
   --navy-mid:    #162d52;
   --orange:      #F97316;
   --orange-dim:  rgba(249,115,22,0.18);
-  --white:       #ffffff;
+  --white:       #ffffff;   /* keep for text on the orange buttons only */
+  /* Headings use a softened white: pure #fff on this navy reaches ~17:1,
+     far past the 4.5:1 WCAG floor, and glares on sharp displays. */
+  --heading:     #edf1f7;
   --text-primary: #e8edf5;
   --text-muted:  #8899bb;
-  --text-dim:    #4a5a7a;
+  --text-dim:    #7d8db3;   /* was #4a5a7a - only 2.46:1, below the WCAG floor */
   --border:      rgba(255,255,255,0.08);
   --border-mid:  rgba(255,255,255,0.14);
   --card-bg:     rgba(255,255,255,0.04);
@@ -271,7 +274,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-size: clamp(2.4rem, 5.5vw, 4.2rem);
   font-size: 2.4rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--heading);
   line-height: 1.1;
   letter-spacing: -0.5px;
   margin-bottom: 22px;
@@ -299,7 +302,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-family: var(--font-head);
   font-size: 28px;
   font-weight: 700;
-  color: var(--white);
+  color: var(--heading);
   line-height: 1;
 }
 .hero-stat-l {
@@ -358,7 +361,7 @@ section { padding: var(--sec-top) 0 var(--sec-bot); }
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-size: 1.9rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--heading);
   line-height: 1.2;
   margin-bottom: 14px;
 }
@@ -402,7 +405,7 @@ section { padding: var(--sec-top) 0 var(--sec-bot); }
   font-family: var(--font-head);
   font-size: 17px;
   font-weight: 700;
-  color: var(--white);
+  color: var(--heading);
   letter-spacing: 0.5px;
   margin-bottom: 5px;
 }
@@ -458,7 +461,7 @@ section { padding: var(--sec-top) 0 var(--sec-bot); }
   font-family: var(--font-head);
   font-size: 14px;
   font-weight: 700;
-  color: var(--white);
+  color: var(--heading);
   letter-spacing: 1px;
 }
 .spec-count {
@@ -543,7 +546,7 @@ section { padding: var(--sec-top) 0 var(--sec-bot); }
   font-family: var(--font-head);
   font-size: 12px;
   font-weight: 700;
-  color: var(--white);
+  color: var(--heading);
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-bottom: 6px;
@@ -1154,7 +1157,7 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.3.1';
+const APP_VERSION = 'V1.3.2';
 
 // === NAVBAR TOGGLE (mobile) ===
 const navToggle = document.getElementById('navToggle');
