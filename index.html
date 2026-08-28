@@ -229,9 +229,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .hero-bg {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
+  /* Small screens get the 900px file; wider viewports load the full 1600px one.
+     Both are the same photo - only the pixel dimensions differ. */
+  background-image: url('images/hero-900.jpg');
   background-size: cover;
   background-position: center 60%;
   filter: brightness(0.45);
+}
+@media (min-width: 700px) {
+  .hero-bg { background-image: url('images/hero.jpg'); }
 }
 .hero-overlay {
   position: absolute;
@@ -810,7 +816,7 @@ footer {
 
 <!-- === HERO === -->
 <section id="hero">
-  <div class="hero-bg" style="background-image: url('images/hero.jpg');"></div>
+  <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content container">
     <p class="hero-eyebrow">Intra-Asia Dry Bulk Operations</p>
@@ -963,11 +969,17 @@ footer {
       <div class="about-img-wrap reveal">
         <div class="about-img-grid">
           <div class="about-img-item">
-            <img src="images/mv-36.jpg" alt="MV Hai Duong 36 at Port Klang" width="1200" height="675" loading="lazy" decoding="async">
+            <img src="images/mv-36-900.jpg"
+                 srcset="images/mv-36-600.jpg 600w, images/mv-36-900.jpg 900w, images/mv-36.jpg 1200w"
+                 sizes="(min-width: 768px) 500px, calc(100vw - 48px)"
+                 alt="MV Hai Duong 36 at Port Klang" width="1200" height="675" loading="lazy" decoding="async">
             <div class="about-img-label">MV Hai Duong 36 - Port Klang</div>
           </div>
           <div class="about-img-item">
-            <img src="images/mv-09.jpg" alt="MV Hai Duong 09 alongside berth" width="1200" height="992" loading="lazy" decoding="async">
+            <img src="images/mv-09-900.jpg"
+                 srcset="images/mv-09-600.jpg 600w, images/mv-09-900.jpg 900w, images/mv-09.jpg 1200w"
+                 sizes="(min-width: 768px) 500px, calc(100vw - 48px)"
+                 alt="MV Hai Duong 09 alongside berth" width="1200" height="992" loading="lazy" decoding="async">
             <div class="about-img-label">MV Hai Duong 09 - Cargo Operations</div>
           </div>
         </div>
@@ -1157,7 +1169,7 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.4.1';
+const APP_VERSION = 'V1.4.2';
 
 // === NAVBAR TOGGLE (mobile) ===
 const navToggle = document.getElementById('navToggle');

@@ -1,6 +1,6 @@
 HAI DUONG MARITIME - TOI UU TOC DO TAI TRANG
 ============================================
-index.html        V1.4.1
+index.html        V1.4.2
 open-tonnage.html V1.3.1
 
 THAY DOI
@@ -31,9 +31,14 @@ FILE CAN PUSH
   index.html                    ghi de
   open-tonnage.html             ghi de
   images/                       THU MUC MOI - push ca thu muc
-    hero.jpg              139 KB   anh nen trang chu (MV Hai Duong 68)
-    mv-36.jpg             117 KB   muc About
-    mv-09.jpg             150 KB   muc About
+    hero.jpg              138 KB   anh nen trang chu, man >=700px
+    hero-900.jpg           54 KB   anh nen, man nho hon 700px
+    mv-36.jpg             117 KB   muc About, ban lon nhat
+    mv-36-900.jpg          77 KB
+    mv-36-600.jpg          41 KB
+    mv-09.jpg             150 KB   muc About, ban lon nhat
+    mv-09-900.jpg         100 KB
+    mv-09-600.jpg          54 KB
     logo.png                9 KB   navbar + favicon
     icon-512.png           34 KB   PWA + og:image cho mang xa hoi
     icon-192.png            7 KB   PWA
@@ -47,9 +52,23 @@ SAU KHI PUSH
 2. Chay lai https://pagespeed.web.dev/ - Performance nen tang dang ke
 3. Neu anh khong hien: kiem tra thu muc images/ da len GitHub chua
 
+ANH RESPONSIVE (srcset)
+-----------------------
+Moi anh About co 3 kich co: 600 / 900 / 1200px. Trinh duyet TU CHON
+ban vua du theo khung hien thi va do net man hinh:
+  - May tinh thuong  -> ban 600   (khung chi rong 500px)
+  - Dien thoai       -> ban 900
+  - Man hinh Retina  -> ban 1200  (giong nhu truoc, khong giam net)
+Anh hero co 2 ban: hero-900.jpg cho man duoi 700px, hero.jpg cho man lon.
+
+Khong ai bi giam chat luong - chi bot tai phan thua.
+
 DOI ANH SAU NAY
 ---------------
-Thay file trong images/ giu nguyen ten la xong, khong phai sua HTML.
-Nen resize truoc: hero 1600px rong, anh About 1200px rong, chat luong 72-82.
+Phai tao DU CAC KICH CO cung ten, neu khong srcset se hong.
+Vi du thay anh muc About:
+  mv-09-600.jpg (600px rong), mv-09-900.jpg (900px), mv-09.jpg (1200px)
+Chat luong JPEG 82 cho anh About, 72 cho hero.
+Neu doi ti le anh, nho sua width/height trong the <img> cho khop.
 
 Developed by Pavel Hai
