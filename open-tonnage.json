@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "syncedAt": "2026-09-03T00:40:41Z",
+  "syncedAt": "2026-09-03T01:36:09Z",
   "rows": [
     {
       "vessel": "MV Hai Duong 09",
@@ -9,25 +9,25 @@
       "lastCargoes": "woodpulp, wbp, steel products, steel products",
       "note": "",
       "status": "Fixed",
-      "updated": "27-Aug-2026"
+      "updated": "3-Sep-2026"
     },
     {
       "vessel": "MV Hai Duong 36",
       "openPort": "Port Klang",
-      "openDate": "End Sept",
+      "openDate": "Early Oct",
       "lastCargoes": "limestone, steel products, steel cargoes",
       "note": "",
       "status": "Open",
-      "updated": "27-Aug-2026"
+      "updated": "3-Sep-2026"
     },
     {
       "vessel": "MV Hai Duong 68",
       "openPort": "Colombo",
-      "openDate": "Mid Sept",
+      "openDate": "20-25th Sept",
       "lastCargoes": "Steel products, limestone, cement and vehicle, steel products",
       "note": "",
       "status": "On sub",
-      "updated": "27-Aug-2026"
+      "updated": "3-Sep-2026"
     }
   ]
 }
