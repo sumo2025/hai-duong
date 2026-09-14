@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "syncedAt": "2026-09-14T03:43:26Z",
+  "syncedAt": "2026-09-14T04:17:08Z",
   "rows": [
     {
       "vessel": "MV Hai Duong 09",
@@ -25,7 +25,7 @@
       "openPort": "Jakarta",
       "openDate": "15-20th Oct",
       "lastCargoes": "Vehicle, steel products, limestone, cement and vehicle, steel products",
-      "note": "Waiting at Duqm due to port congestion",
+      "note": "",
       "status": "Open",
       "updated": "14-Sep-2026"
     }
