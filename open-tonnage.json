@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "syncedAt": "2026-09-17T05:25:24Z",
+  "syncedAt": "2026-09-17T10:16:01Z",
   "rows": [
     {
       "vessel": "MV Hai Duong 09",
@@ -25,7 +25,7 @@
       "openPort": "Jakarta",
       "openDate": "15-20th Oct",
       "lastCargoes": "Vehicle, steel products, limestone, cement and vehicle, steel products",
-      "note": "",
+      "note": "Looking for cargo to near North VN (except China)",
       "status": "Open",
       "updated": "17-Sep-2026"
     }
