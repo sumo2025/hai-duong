@@ -605,6 +605,12 @@ section { padding: var(--sec-top) 0 var(--sec-bot); }
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-bottom: 2px;
+}/* Chinese characters need more size and no letter-spacing to stay legible
+   at the 10px the surrounding label uses. */
+.contact-name-cn {
+  font-size: 12px;
+  letter-spacing: 0;
+  margin-left: 2px;
 }
 .contact-value {
   font-size: 14px;
@@ -1038,14 +1044,15 @@ footer {
           <div>
             <div class="contact-label">Mr. Le Minh Hai</div>
             <div class="contact-value"><a href="tel:+84902091096">+84 902 091 096</a></div>
-            <div class="contact-value-sm">WhatsApp / Zalo available</div>
+            <div class="contact-value-sm">WhatsApp / Zalo / WeChat: cafebiz</div>
           </div>
         </div>
         <div class="contact-row">
-          <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 3C4.9 3 2 5.5 2 8.6c0 1.8.9 3.3 2.4 4.4L3.6 15l2.5-1.2c.7.2 1.5.3 2.4.3h.5"/><path d="M15.5 8.5c3.6 0 6.5 2.4 6.5 5.4 0 1.7-.9 3.2-2.4 4.2l.7 2-2.3-1.1c-.8.2-1.6.3-2.5.3-3.6 0-6.5-2.4-6.5-5.4s2.9-5.4 6.5-5.4z"/><circle cx="6.4" cy="7.6" r=".7" fill="currentColor"/><circle cx="10.6" cy="7.6" r=".7" fill="currentColor"/><circle cx="13.6" cy="12.6" r=".6" fill="currentColor"/><circle cx="17.4" cy="12.6" r=".6" fill="currentColor"/></svg>
+          <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 1.2 2 2 0 012.16 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           <div>
-            <div class="contact-label">WeChat</div>
-            <div class="contact-value">cafebiz</div>
+            <div class="contact-label">Kenny Chen <span class="contact-name-cn">(&#38472;&#33521;&#36234;)</span></div>
+            <div class="contact-value"><a href="tel:+84982824130">+84 982 824 130</a></div>
+            <div class="contact-value-sm">WhatsApp / Zalo / WeChat / Viber / Kakao / Line</div>
           </div>
         </div>
       </div>
@@ -1169,7 +1176,7 @@ footer {
 </footer>
 
 <script>
-const APP_VERSION = 'V1.4.2';
+const APP_VERSION = 'V1.5.0';
 
 // === NAVBAR TOGGLE (mobile) ===
 const navToggle = document.getElementById('navToggle');
