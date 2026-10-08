@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "syncedAt": "2026-10-08T11:32:59Z",
+  "syncedAt": "2026-10-08T17:59:42Z",
   "rows": [
     {
       "vessel": "MV Hai Duong 09",
@@ -9,7 +9,7 @@
       "lastCargoes": "woodpulp, wbp, steel products, steel products",
       "note": "TC for 3 months",
       "status": "Fixed",
-      "updated": "8-Oct-2026"
+      "updated": "9-Oct-2026"
     },
     {
       "vessel": "MV Hai Duong 36",
@@ -18,7 +18,7 @@
       "lastCargoes": "Steel/Vehicles, limestone, steel products, steel cargoes",
       "note": "Opening date maybe delay due to port congestion",
       "status": "Open",
-      "updated": "8-Oct-2026"
+      "updated": "9-Oct-2026"
     },
     {
       "vessel": "MV Hai Duong 68",
@@ -27,7 +27,7 @@
       "lastCargoes": "Vehicle, steel products, limestone, cement and vehicle, steel products",
       "note": "Looking for cargo to near North VN (except China)",
       "status": "Open",
-      "updated": "8-Oct-2026"
+      "updated": "9-Oct-2026"
     }
   ]
 }
