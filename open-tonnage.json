@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "syncedAt": "2026-11-12T22:22:19Z",
+  "syncedAt": "2026-11-13T02:46:04Z",
   "rows": [
     {
       "vessel": "MV Hai Duong 09",
@@ -13,8 +13,8 @@
     },
     {
       "vessel": "MV Hai Duong 36",
-      "openPort": "Port Klang",
-      "openDate": "End Nov",
+      "openPort": "Vizag",
+      "openDate": "Mid Dec",
       "lastCargoes": "Steel/Vehicles, Steel/Vehicles, limestone, steel products, steel cargoes",
       "note": "Opening date maybe delay due to port congestion",
       "status": "Open",
